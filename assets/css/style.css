@@ -31,3 +31,38 @@
     margin: 10px;
     background-color: #2ecc71;
 }
+
+.button {
+    height: 50px;
+    width: auto;
+    color: white;
+    background-color: rgb(28, 131, 165);
+    font-size: 16px;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.button:hover {
+    background-color: rgb(100, 177, 203);
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
+}
+
+h2 {
+    font-size: 40px;
+    text-align: center;
+    margin: 20px;
+}
+
+.result p {
+    font-size: 36px;
+    text-align: center;
+    margin: 20px;
+    font-style: italic;
+    color: gray;
+}
