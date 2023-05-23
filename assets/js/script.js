@@ -5,6 +5,9 @@ var seconds = 75;
 var gameOverEl = $('<h2>Game Over</h2>')
 var scoreEl
 var timerInterval;
+var textBoxEl = $(`<p><label for="initials">Save your Score:</label>
+<input type="initials" name="form" id="intials" placeholder="Your initials here" /></p>`)
+var submitEl = $(`<button onclick= 'storeScores()' id="submit">Submit</button>`)
 
 // array of objects for questions
 var questions = [{
@@ -49,16 +52,16 @@ var currentQuestion = questions[questionCounter];
 // runs the quiz, and orients the data from array 'questions' onto the page
 function quiz() {
     var quizQuestions = $(`
-    <div id="quiz-questions">
-    <h2>${currentQuestion.question}</h2>
-    <ul>
-        <li><button class="button" id="answer-0" onclick = 'checkAnswer(0)'>${currentQuestion.options[0]}</button></li>
-        <li><button class="button" id="answer-1" onclick = 'checkAnswer(1)'>${currentQuestion.options[1]}</button></li>
-        <li><button class="button" id="answer-2" onclick = 'checkAnswer(2)'>${currentQuestion.options[2]}</button></li>
-        <li><button class="button" id="answer-3" onclick = 'checkAnswer(3)'>${currentQuestion.options[3]}</button></li>
-    </ul>
-    </div>
-    `)
+                <div id="quiz-questions">
+                    <h2>${currentQuestion.question}</h2>
+                    <ul>
+                        <li><button class="button" id="answer-0" onclick='checkAnswer(0)'>${currentQuestion.options[0]}</button></li>
+                        <li><button class="button" id="answer-1" onclick='checkAnswer(1)'>${currentQuestion.options[1]}</button></li>
+                        <li><button class="button" id="answer-2" onclick='checkAnswer(2)'>${currentQuestion.options[2]}</button></li>
+                        <li><button class="button" id="answer-3" onclick='checkAnswer(3)'>${currentQuestion.options[3]}</button></li>
+                    </ul>
+                </div>
+                `)
 
     $("#question-container").append(quizQuestions);
 }
@@ -110,7 +113,6 @@ function checkEnd() {
 function captureScore() {
     var score = $('#time').text();
     scoreEl = $(`<h2>Score: ${score}</h2>`)
-    console.log(score);    
 }
 
 //if i as a number value is equal to answer in object, answer is correct. Else, it is incorrect
@@ -136,7 +138,7 @@ function checkAnswer(i) {
             nextQuestion();
         } else if (seconds === 0) {
             gameOver();
-            
+
         }
     }
 }
@@ -148,15 +150,16 @@ function nextQuestion() {
     quiz();
 }
 
-// clears page and displays "Game Over"
+// clears page and displays "Game Over" and final score
 function gameOver() {
     clearInterval(timerInterval);
     $('.result').delay(500).fadeOut();
-    console.log($('#time').text());
     $("#quiz-questions").remove();
     $("#question-container").append(gameOverEl);
     captureScore();
     $("#question-container").append(scoreEl);
+    $("#question-container").append(textBoxEl);
+    textBoxEl.append(submitEl);
 }
 
 //checks if user has reached end of quiz naturally before timer is up
@@ -167,3 +170,10 @@ function checkEnd() {
 }
 
 letsBegin();
+
+function storeScores() {
+    event.preventDefault();
+    localStorage.Initials = $("#initials").val();
+    localStorage.Score = $("#time").text();
+
+}
