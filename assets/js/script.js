@@ -39,6 +39,7 @@ var questionCounter = 0;
 var quizQuestions = $(
 )
 
+// runs the quiz, and orients the data from array 'questions' onto the page
 function startOfQuiz() {
     var currentQuestion = questions[questionCounter];
 
@@ -56,3 +57,14 @@ function startOfQuiz() {
 
     $("#question-container").append(quizQuestions);
 }
+
+
+// click event to begin the quiz when start button present on page is clicked
+function letsBegin() {
+    $("#start-button").on("click", function () {
+        $("#start-container").hide();
+        startOfQuiz();
+    })
+}
+
+letsBegin(); 
