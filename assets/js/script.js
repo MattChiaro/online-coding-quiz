@@ -105,11 +105,16 @@ function checkEnd() {
     }
 }
 
+function captureScore() {
+    var score = $('#time').text();
+    console.log(score);    
+}
+
 //if i as a number value is equal to answer in object, answer is correct. Else, it is incorrect
 function checkAnswer(i) {
     if (i === currentQuestion.answer) {
         $(".result ").empty();
-        $(".result ").append(correctEl);
+        $(".result ").append(correctEl) //.delay(500).fadeOut();
         if (seconds > 0 && questionCounter < questions.length) {
             questionCounter++;
             checkEnd();
@@ -120,7 +125,7 @@ function checkAnswer(i) {
 
     } else if (i !== currentQuestion.answer) {
         $(".result ").empty();
-        $(".result ").append(wrongEl);
+        $(".result ").append(wrongEl)//.delay(500).fadeOut();
         if (seconds > 0 && questionCounter < questions.length) {
             seconds = seconds - 15;
             questionCounter++;
