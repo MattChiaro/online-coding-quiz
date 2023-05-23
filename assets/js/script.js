@@ -3,6 +3,7 @@ var correctEl = $(`<p>correct!</p>`)
 var wrongEl = $('<p>wrong</p>')
 var seconds = 75;
 var gameOverEl = $('<h2>Game Over</h2>')
+var scoreEl
 var timerInterval;
 
 // array of objects for questions
@@ -108,6 +109,7 @@ function checkEnd() {
 
 function captureScore() {
     var score = $('#time').text();
+    scoreEl = $(`<h2>Score: ${score}</h2>`)
     console.log(score);    
 }
 
@@ -149,10 +151,12 @@ function nextQuestion() {
 // clears page and displays "Game Over"
 function gameOver() {
     clearInterval(timerInterval);
+    $('.result').delay(500).fadeOut();
     console.log($('#time').text());
-    $('.result').remove();
     $("#quiz-questions").remove();
     $("#question-container").append(gameOverEl);
+    captureScore();
+    $("#question-container").append(scoreEl);
 }
 
 //checks if user has reached end of quiz naturally before timer is up
