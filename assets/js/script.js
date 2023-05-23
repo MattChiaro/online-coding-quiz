@@ -38,9 +38,6 @@ var questions = [{
 
 var questionCounter = 0;
 
-var quizQuestions = $(
-)
-
 // runs the quiz, and orients the data from array 'questions' onto the page
 function startOfQuiz() {
     var currentQuestion = questions[questionCounter];
@@ -71,12 +68,8 @@ function letsBegin() {
     })
 }
 
-
-
-letsBegin(); 
-
 function setTime() {
-    var seconds = 5;
+    var seconds = 75;
     var timerInterval = setInterval(function () {
         seconds--;
         timeEl.text(seconds);
@@ -87,3 +80,14 @@ function setTime() {
         console.log('done');
     }
 }
+
+
+
+
+
+
+letsBegin();
+
+$('button').on("click", function () {
+    console.log("clicked");
+});
