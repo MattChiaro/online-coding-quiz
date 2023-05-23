@@ -1,7 +1,8 @@
 var timeEl = $("#time")
 var correct = $(`<p>correct!</p>`)
 var wrong = "wrong"
-var seconds = 5;
+var seconds = 75;
+var gameOver = $('<h2>Game Over</h2>')
 
 var questions = [{
     question: "What is the difference between a string and a number in JavaScript?",
@@ -72,12 +73,14 @@ function setTime() {
     var timerInterval = setInterval(function () {
         seconds--;
         timeEl.text(seconds);
+        if (seconds <= 0) {
+            clearInterval(timerInterval);
+            $("#quiz-questions").remove();
+            $("#question-container").append(gameOver);
+        }
     }, 1000);
 
-    if (seconds === 0) {
-        clearInterval(timerInterval);
-        console.log('done');
-    }
+
 }
 
 
@@ -89,22 +92,37 @@ letsBegin();
 
 function checkAnswer(i) {
     if (i === currentQuestion.answer) {
+        $(".result ").empty();
         $(".result ").append(correct);
-        if (seconds > 0 && questionCounter < questions.length) { 
+        if (seconds > 0 && questionCounter < questions.length) {
             questionCounter++;
-            startOfQuiz();
-        } else if (seconds === 0) {
-            console.log("done");
+            nextQuestion();
+        } else if (seconds <= 0) {
+            $('.result').remove();
+            $("#quiz-questions").remove();
+            $("#question-container").append(gameOver);
+            ;
         }
-        
-    } else {
+
+    } else if (i !== currentQuestion.answer) {
+        $(".result ").empty();
         $(".result ").append(wrong);
-        seconds = seconds - 15;
-        questionCounter++;
+        if (seconds > 0 && questionCounter < questions.length) {
+            seconds = seconds - 15;
+            questionCounter++;
+            nextQuestion();
+        } else if (seconds <= 0) {
+            $('.result').remove();
+            $("#quiz-questions").remove();
+            $("#question-container").append(gameOver);
+        }
+
     }
 
 }
 
-function checkTime() {
-
+function nextQuestion() {
+    $("#quiz-questions").remove();
+    currentQuestion = questions[questionCounter];
+    startOfQuiz();
 }
