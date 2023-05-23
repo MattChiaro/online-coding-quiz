@@ -3,6 +3,7 @@ var correctEl = $(`<p>correct!</p>`)
 var wrongEl = $('<p>wrong</p>')
 var seconds = 75;
 var gameOverEl = $('<h2>Game Over</h2>')
+var timerInterval;
 
 // array of objects for questions
 var questions = [{
@@ -72,10 +73,10 @@ function letsBegin() {
 
 //sets a timer, runs gameOver() if timer reaches 0
 function setTime() {
-    var timerInterval = setInterval(function () {
+    timerInterval = setInterval(function () {
         seconds--;
         timeEl.text(seconds);
-        if (seconds <= 0) {
+        if (seconds === 0) {
             clearInterval(timerInterval);
             gameOver();
         }
@@ -115,24 +116,25 @@ function checkAnswer(i) {
     if (i === currentQuestion.answer) {
         $(".result ").empty();
         $(".result ").append(correctEl) //.delay(500).fadeOut();
-        if (seconds > 0 && questionCounter < questions.length) {
+        if (seconds > 0 || questionCounter === questions.length) {
             questionCounter++;
             checkEnd();
             nextQuestion();
-        } else if (seconds <= 0) {
+        } else if (seconds === 0) {
             gameOver();
         }
 
     } else if (i !== currentQuestion.answer) {
         $(".result ").empty();
         $(".result ").append(wrongEl)//.delay(500).fadeOut();
-        if (seconds > 0 && questionCounter < questions.length) {
-            seconds = seconds - 15;
+        if (seconds > 0 || questionCounter === questions.length) {
+            seconds -= 15;
             questionCounter++;
             checkEnd();
             nextQuestion();
-        } else if (seconds <= 0) {
+        } else if (seconds === 0) {
             gameOver();
+            
         }
     }
 }
@@ -146,6 +148,8 @@ function nextQuestion() {
 
 // clears page and displays "Game Over"
 function gameOver() {
+    clearInterval(timerInterval);
+    console.log($('#time').text());
     $('.result').remove();
     $("#quiz-questions").remove();
     $("#question-container").append(gameOverEl);
