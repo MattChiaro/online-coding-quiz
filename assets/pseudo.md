@@ -1,9 +1,9 @@
-#Pseudo Code
+# Pseudo Code
 
-Create Questions : question string, options, correct answer
-Create question counter = 0
+Create Questions : question string, options, correct answer ✅
+Create question counter = 0 ✅
 
-Click on start button
+Click on start button 
     start timer from 75 seconds
         timer decrements every second
     reset Question Counter = 0
