@@ -1,3 +1,5 @@
+var timeEl = $("#time")
+
 var questions = [{
     question: "What is the difference between a string and a number in JavaScript?",
     options: ["A string is a sequence of characters, while a number is a value that represents a quantity.",
@@ -47,10 +49,10 @@ function startOfQuiz() {
     <div id="quiz-questions">
     <h2>${currentQuestion.question}</h2>
     <ul>
-        <li><button id="answer-0">${currentQuestion.options[0]}</button></li>
-        <li><button id="answer-1">${currentQuestion.options[1]}</button></li>
-        <li><button id="answer-2">${currentQuestion.options[2]}</button></li>
-        <li><button id="answer-3">${currentQuestion.options[3]}</button></li>
+        <li><button class="buttons" id="answer-0">${currentQuestion.options[0]}</button></li>
+        <li><button class="buttons" id="answer-1">${currentQuestion.options[1]}</button></li>
+        <li><button class="buttons" id="answer-2">${currentQuestion.options[2]}</button></li>
+        <li><button class="buttons" id="answer-3">${currentQuestion.options[3]}</button></li>
     </ul>
     </div>
     `)
@@ -63,8 +65,25 @@ function startOfQuiz() {
 function letsBegin() {
     $("#start-button").on("click", function () {
         $("#start-container").hide();
+        questionCounter = 0;
+        setTime();
         startOfQuiz();
     })
 }
 
+
+
 letsBegin(); 
+
+function setTime() {
+    var seconds = 5;
+    var timerInterval = setInterval(function () {
+        seconds--;
+        timeEl.text(seconds);
+    }, 1000);
+
+    if (seconds === 0) {
+        clearInterval(timerInterval);
+        console.log('done');
+    }
+}
