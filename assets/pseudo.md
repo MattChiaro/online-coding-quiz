@@ -12,20 +12,20 @@ Click on start button
 Click event on one of the options (.addEventListener)
     Check if it is correct
         if correct, 
-            display 'correct'
+            display 'correct' ✅
             check if timer > 0 (func checkTime)
             if question counter < length of question array (func checkQuestion)
-                increment question counter
+                increment question counter ✅
                 advance to next question
             else if(timer === 0)
                 display score
                 form for User Initials and Score, save in local storage, redirect to new HTML page showing scores. Sort scores by number value.
         if incorrect, 
-            display 'wrong' 
-            decrease time by 15 seconds
+            display 'wrong' ✅
+            decrease time by 15 seconds ✅
             check if timer > 0 (func checkTime)
             if question counter < length of question array (func checkQuestion)
-                increment question counter
+                increment question counter ✅
                 advance to next question
             else if(timer === 0)
                 display score

@@ -1,4 +1,7 @@
 var timeEl = $("#time")
+var correct = $(`<p>correct!</p>`)
+var wrong = "wrong"
+var seconds = 5;
 
 var questions = [{
     question: "What is the difference between a string and a number in JavaScript?",
@@ -37,19 +40,17 @@ var questions = [{
 }]
 
 var questionCounter = 0;
-
+var currentQuestion = questions[questionCounter];
 // runs the quiz, and orients the data from array 'questions' onto the page
 function startOfQuiz() {
-    var currentQuestion = questions[questionCounter];
-
     var quizQuestions = $(`
     <div id="quiz-questions">
     <h2>${currentQuestion.question}</h2>
     <ul>
-        <li><button class="buttons" id="answer-0">${currentQuestion.options[0]}</button></li>
-        <li><button class="buttons" id="answer-1">${currentQuestion.options[1]}</button></li>
-        <li><button class="buttons" id="answer-2">${currentQuestion.options[2]}</button></li>
-        <li><button class="buttons" id="answer-3">${currentQuestion.options[3]}</button></li>
+        <li><button class="button" id="answer-0" onclick = 'checkAnswer(0)'>${currentQuestion.options[0]}</button></li>
+        <li><button class="button" id="answer-1" onclick = 'checkAnswer(1)'>${currentQuestion.options[1]}</button></li>
+        <li><button class="button" id="answer-2" onclick = 'checkAnswer(2)'>${currentQuestion.options[2]}</button></li>
+        <li><button class="button" id="answer-3" onclick = 'checkAnswer(3)'>${currentQuestion.options[3]}</button></li>
     </ul>
     </div>
     `)
@@ -62,14 +63,12 @@ function startOfQuiz() {
 function letsBegin() {
     $("#start-button").on("click", function () {
         $("#start-container").hide();
-        questionCounter = 0;
         setTime();
         startOfQuiz();
     })
 }
 
 function setTime() {
-    var seconds = 75;
     var timerInterval = setInterval(function () {
         seconds--;
         timeEl.text(seconds);
@@ -88,6 +87,24 @@ function setTime() {
 
 letsBegin();
 
-$('button').on("click", function () {
-    console.log("clicked");
-});
+function checkAnswer(i) {
+    if (i === currentQuestion.answer) {
+        $(".result ").append(correct);
+        if (seconds > 0 && questionCounter < questions.length) { 
+            questionCounter++;
+            startOfQuiz();
+        } else if (seconds === 0) {
+            console.log("done");
+        }
+        
+    } else {
+        $(".result ").append(wrong);
+        seconds = seconds - 15;
+        questionCounter++;
+    }
+
+}
+
+function checkTime() {
+
+}
