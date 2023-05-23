@@ -4,6 +4,7 @@ var wrongEl = $('<p>wrong</p>')
 var seconds = 75;
 var gameOverEl = $('<h2>Game Over</h2>')
 
+// array of objects for questions
 var questions = [{
     question: "What is the difference between a string and a number in JavaScript?",
     options: ["A string is a sequence of characters, while a number is a value that represents a quantity.",
@@ -42,6 +43,7 @@ var questions = [{
 
 var questionCounter = 0;
 var currentQuestion = questions[questionCounter];
+
 // runs the quiz, and orients the data from array 'questions' onto the page
 function quiz() {
     var quizQuestions = $(`
@@ -68,19 +70,39 @@ function letsBegin() {
     })
 }
 
-//sets a timer, and appends "Game Over" if timer reaches zero
+//sets a timer, runs gameOver() if timer reaches 0
 function setTime() {
     var timerInterval = setInterval(function () {
         seconds--;
         timeEl.text(seconds);
         if (seconds <= 0) {
             clearInterval(timerInterval);
-            $("#quiz-questions").remove();
-            $("#question-container").append(gameOverEl);
+            gameOver();
         }
     }, 1000);
 
 
+}
+
+//clears the page, redeclares value of currentQuestion, and displays new question
+function nextQuestion() {
+    $("#quiz-questions").remove();
+    currentQuestion = questions[questionCounter];
+    quiz();
+}
+
+// clears page and displays "Game Over"
+function gameOver() {
+    $('.result').remove();
+    $("#quiz-questions").remove();
+    $("#question-container").append(gameOverEl);
+}
+
+//checks if user has reached end of quiz naturally before timer is up
+function checkEnd() {
+    if (questionCounter === questions.length) {
+        gameOver();
+    }
 }
 
 //if i as a number value is equal to answer in object, answer is correct. Else, it is incorrect
@@ -110,22 +132,25 @@ function checkAnswer(i) {
     }
 }
 
+//clears the page, redeclares value of currentQuestion, and displays new question
 function nextQuestion() {
     $("#quiz-questions").remove();
     currentQuestion = questions[questionCounter];
     quiz();
 }
 
-letsBegin();
-
+// clears page and displays "Game Over"
 function gameOver() {
     $('.result').remove();
     $("#quiz-questions").remove();
     $("#question-container").append(gameOverEl);
 }
 
+//checks if user has reached end of quiz naturally before timer is up
 function checkEnd() {
     if (questionCounter === questions.length) {
         gameOver();
     }
 }
+
+letsBegin();
