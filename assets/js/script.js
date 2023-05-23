@@ -1,6 +1,6 @@
 var timeEl = $("#time")
 var correctEl = $(`<p>correct!</p>`)
-var wrongEl = "wrong"
+var wrongEl = $('<p>wrong</p>')
 var seconds = 75;
 var gameOverEl = $('<h2>Game Over</h2>')
 
@@ -59,7 +59,6 @@ function quiz() {
     $("#question-container").append(quizQuestions);
 }
 
-
 // click event to begin the quiz when start button present on page is clicked
 function letsBegin() {
     $("#start-button").on("click", function () {
@@ -69,6 +68,7 @@ function letsBegin() {
     })
 }
 
+//sets a timer, and appends "Game Over" if timer reaches zero
 function setTime() {
     var timerInterval = setInterval(function () {
         seconds--;
@@ -83,35 +83,31 @@ function setTime() {
 
 }
 
+//if i as a number value is equal to answer in object, answer is correct. Else, it is incorrect
 function checkAnswer(i) {
     if (i === currentQuestion.answer) {
         $(".result ").empty();
         $(".result ").append(correctEl);
         if (seconds > 0 && questionCounter < questions.length) {
             questionCounter++;
+            checkEnd();
             nextQuestion();
         } else if (seconds <= 0) {
             gameOver();
-        } else if (currentQuestion === questions.length) {
-            gameOver();
-
         }
 
-    } else {
+    } else if (i !== currentQuestion.answer) {
         $(".result ").empty();
         $(".result ").append(wrongEl);
         if (seconds > 0 && questionCounter < questions.length) {
             seconds = seconds - 15;
             questionCounter++;
+            checkEnd();
             nextQuestion();
         } else if (seconds <= 0) {
             gameOver();
-        } else if (currentQuestion === questions.length) {
-            gameOver();
         }
-
     }
-
 }
 
 function nextQuestion() {
@@ -126,4 +122,10 @@ function gameOver() {
     $('.result').remove();
     $("#quiz-questions").remove();
     $("#question-container").append(gameOverEl);
+}
+
+function checkEnd() {
+    if (questionCounter === questions.length) {
+        gameOver();
+    }
 }
