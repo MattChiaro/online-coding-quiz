@@ -1,8 +1,8 @@
 var timeEl = $("#time")
-var correct = $(`<p>correct!</p>`)
-var wrong = "wrong"
+var correctEl = $(`<p>correct!</p>`)
+var wrongEl = "wrong"
 var seconds = 75;
-var gameOver = $('<h2>Game Over</h2>')
+var gameOverEl = $('<h2>Game Over</h2>')
 
 var questions = [{
     question: "What is the difference between a string and a number in JavaScript?",
@@ -43,7 +43,7 @@ var questions = [{
 var questionCounter = 0;
 var currentQuestion = questions[questionCounter];
 // runs the quiz, and orients the data from array 'questions' onto the page
-function startOfQuiz() {
+function quiz() {
     var quizQuestions = $(`
     <div id="quiz-questions">
     <h2>${currentQuestion.question}</h2>
@@ -65,7 +65,7 @@ function letsBegin() {
     $("#start-button").on("click", function () {
         $("#start-container").hide();
         setTime();
-        startOfQuiz();
+        quiz();
     })
 }
 
@@ -76,45 +76,38 @@ function setTime() {
         if (seconds <= 0) {
             clearInterval(timerInterval);
             $("#quiz-questions").remove();
-            $("#question-container").append(gameOver);
+            $("#question-container").append(gameOverEl);
         }
     }, 1000);
 
 
 }
 
-
-
-
-
-
-letsBegin();
-
 function checkAnswer(i) {
     if (i === currentQuestion.answer) {
         $(".result ").empty();
-        $(".result ").append(correct);
+        $(".result ").append(correctEl);
         if (seconds > 0 && questionCounter < questions.length) {
             questionCounter++;
             nextQuestion();
         } else if (seconds <= 0) {
-            $('.result').remove();
-            $("#quiz-questions").remove();
-            $("#question-container").append(gameOver);
-            ;
+            gameOver();
+        } else if (currentQuestion === questions.length) {
+            gameOver();
+
         }
 
-    } else if (i !== currentQuestion.answer) {
+    } else {
         $(".result ").empty();
-        $(".result ").append(wrong);
+        $(".result ").append(wrongEl);
         if (seconds > 0 && questionCounter < questions.length) {
             seconds = seconds - 15;
             questionCounter++;
             nextQuestion();
         } else if (seconds <= 0) {
-            $('.result').remove();
-            $("#quiz-questions").remove();
-            $("#question-container").append(gameOver);
+            gameOver();
+        } else if (currentQuestion === questions.length) {
+            gameOver();
         }
 
     }
@@ -124,5 +117,13 @@ function checkAnswer(i) {
 function nextQuestion() {
     $("#quiz-questions").remove();
     currentQuestion = questions[questionCounter];
-    startOfQuiz();
+    quiz();
+}
+
+letsBegin();
+
+function gameOver() {
+    $('.result').remove();
+    $("#quiz-questions").remove();
+    $("#question-container").append(gameOverEl);
 }
