@@ -5,8 +5,8 @@ var seconds = 75;
 var gameOverEl = $('<h2>Game Over</h2>')
 var scoreEl
 var timerInterval;
-var textBoxEl = $(`<p><label for="initials">Save your Score:</label>
-<input type="initials" name="form" id="intials" placeholder="Your initials here" /></p>`)
+var textBoxEl = $(`<p><label for="Initials">Save your Score:</label>
+<input type="initials" name="form" id="initials" placeholder="Your initials here" /></p>`)
 var submitEl = $(`<button onclick= 'storeScores()' id="submit">Submit</button>`)
 
 // array of objects for questions
@@ -172,8 +172,8 @@ function checkEnd() {
 letsBegin();
 
 function storeScores() {
-    event.preventDefault();
-    localStorage.Initials = $("#initials").val();
+    var storeInit = $("#initials").val();
+    localStorage.Initials = storeInit;
     localStorage.Score = $("#time").text();
 
 }
